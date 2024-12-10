@@ -1,22 +1,20 @@
 public class Main {
     public static void main(String[] args) {
-        Store store = new Store();
+        DatabaseManager dbManager = new DatabaseManager();
 
-        // создание отделов
-        Department electronics = new Department("Electronics", "10 AM - 6 PM");
-        Department groceries = new Department("Groceries", "8 AM - 10 PM");
+        dbManager.connect();
 
-        // добавление товаров в отделы
-        electronics.addProduct(new Product("Laptop", 99999.99));
-        electronics.addProduct(new Product("Smartphone", 45.999));
+        dbManager.initializeDatabase();
 
-        groceries.addProduct(new Product("Milk", 69.99));
-        groceries.addProduct(new Product("Bread", 45.99));
+        // добавление данных в базу
+        dbManager.saveDepartment("Electronics", "10 AM - 6 PM");
+        dbManager.saveDepartment("Groceries", "8 AM - 10 PM");
 
-        // добавление отделов в магазин
-        store.addDepartment(electronics);
-        store.addDepartment(groceries);
+        dbManager.saveProduct("Laptop", 99999.99, 1); // department_id = 1
+        dbManager.saveProduct("Smartphone", 45999.99, 1);
+        dbManager.saveProduct("Milk", 69.99, 2); // department_id = 2
+        dbManager.saveProduct("Bread", 45.99, 2);
 
-        store.displayDepartments();
+        dbManager.disconnect();
     }
 }
